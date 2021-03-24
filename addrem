@@ -1,0 +1,43 @@
+#!/bin/bash
+
+#TODO:
+# - have user specify location of where reminders are stored
+#   - have default
+# - have user say where terminal-notifier is stored
+#   - have mine as default
+# - give ability for user to change message of notification
+# - check that Y works for confirming zoom
+# - add ability to delete crontabs
+
+read -p "Enter event to be reminded of: " eventName
+read -p "Is this over Zoom? (Y/N): " confirm
+if echo "$confirm" | grep -iq "^y"; then
+  read -p "Please provide the Zoom link: " zoomLink
+fi
+
+read -p $'Please provide the days you want to be reminded separated by spaces \n(1=Mon, 2=Tue, 3=Wed, 4=Thur, 5=Fri, 6=Sat, 7=Sun)\n: ' days
+
+read -p "Please provide the hour (24-hour time) then minute separated by spaces: " times
+
+timesArray=($times)
+hour=${timesArray[0]}
+minute=${timesArray[1]}
+
+# Now that we have the necessary data, we can add it as a terminal-notifier script and then add it to crontab
+
+touch "${eventName}_reminder".sh
+
+chmod u+x "${eventName}_reminder".sh
+
+# Now add the terminal-notifier part to the newly created reminder script
+echo "'/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier' -title '$eventName' -message 'Go to $eventName' -open $zoomLink" > "${eventName}_reminder".sh
+
+# Now add the reminder script to the crontab with user-specified times
+
+currentDir=$(pwd)
+fileName=$currentDir/$eventName
+
+# crontab order
+#min hour * * day 
+(crontab -l 2>/dev/null; echo "$minute $hour * * $days ${fileName}_reminder.sh") | crontab -
+
