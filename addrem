@@ -14,9 +14,9 @@ read -p "Enter a title for the reminder: " title
 read -p "Enter a message for the reminder: " message
 title=${title[@]}
 message=${message[@]}
-read -p "Is this over Zoom? (Y/N): " confirm
+read -p "Is this over an online meeting platform such as Zoom? (Y/N): " confirm
 if echo "$confirm" | grep -iq "^y"; then
-  read -p "Please provide the Zoom link: " zoomLink
+  read -p "Please provide the online meeting link: " meetingLink
 fi
 
 read -p $'Please provide the days you want to be reminded separated by spaces \n(1=Mon, 2=Tue, 3=Wed, 4=Thur, 5=Fri, 6=Sat, 7=Sun)\n: ' days
@@ -50,7 +50,7 @@ touch "${fileName}"
 chmod u+x "${fileName}"
 
 # Now add the terminal-notifier part to the newly created reminder script
-echo "'/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier' -title '$title' -message '$message' -open $zoomLink" > "$fileName"
+echo "'/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier' -title '$title' -message '$message' -open $meetingLink" > "$fileName"
 
 # Now add the reminder script to the crontab with user-specified times
 

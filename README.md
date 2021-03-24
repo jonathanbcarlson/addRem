@@ -1,9 +1,9 @@
 # addRem
-## Add reminders to go to a Zoom class 
+## Add reminders to go to an online class 
 ## Usage
 - Note that you do have to give your terminal application administrative control to use addRem since it uses crontab to remind you.
 - First run addRem: `./addRem`
-- Then answer questions about the name of the event, zoom link, date and time, and where you want the reminder scripts to be stored.
+- Then answer questions about the name of the event, online class link (e.g. Zoom link), date and time, and where you want the reminder scripts to be stored.
 
 ## TODO:
 - [x] have user specify location of where reminders are stored
@@ -25,7 +25,7 @@
     ...
     Specify where you want to store reminders shell scripts:  $remHome
     ```
-Uses:
+## Uses:
 - terminal-notifier
 - crontab
 - bash
