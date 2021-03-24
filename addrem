@@ -1,15 +1,17 @@
 #!/bin/bash
 
 #TODO:
-# - have user specify location of where reminders are stored
-#   - have default
-# - have user say where terminal-notifier is stored
-#   - have mine as default
-# - give ability for user to change message of notification
-# - check that Y works for confirming zoom
-# - add ability to delete crontabs
+# -[ ] have user specify location of where reminders are stored
+#   -[ ] have default
+# -[ ] have user say where terminal-notifier is stored
+#   -[ ] have mine as default
+# -[x] give ability for user to change message of notification
+# -[x] check that Y works for confirming zoom
+# -[ ] add ability to delete crontabs
 
 read -p "Enter event to be reminded of: " eventName
+read -p "Enter a message for the reminder: " message
+message=${message[@]}
 read -p "Is this over Zoom? (Y/N): " confirm
 if echo "$confirm" | grep -iq "^y"; then
   read -p "Please provide the Zoom link: " zoomLink
@@ -30,7 +32,7 @@ touch "${eventName}_reminder".sh
 chmod u+x "${eventName}_reminder".sh
 
 # Now add the terminal-notifier part to the newly created reminder script
-echo "'/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier' -title '$eventName' -message 'Go to $eventName' -open $zoomLink" > "${eventName}_reminder".sh
+echo "'/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier' -title '$eventName' -message '$message' -open $zoomLink" > "${eventName}_reminder".sh
 
 # Now add the reminder script to the crontab with user-specified times
 
