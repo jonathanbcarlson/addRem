@@ -1,13 +1,18 @@
 #!/bin/bash
 
 #TODO:
-# -[ ] have user specify location of where reminders are stored
-#   -[ ] have default
+# -[x] have user specify location of where reminders are stored
+#   -[x] have default
 # -[ ] have user say where terminal-notifier is stored
 #   -[ ] have mine as default
 # -[x] give ability for user to change message of notification
 # -[x] check that Y works for confirming zoom
 # -[ ] add ability to delete crontabs
+
+# rem_Home is what $HOME should be set to when exported
+# e.g. type: 
+# rem_Home=$HOME
+# export rem_Home
 
 read -p "Enter event to be reminded of: " eventName
 read -p "Enter a title for the reminder: " title
@@ -23,25 +28,39 @@ read -p $'Please provide the days you want to be reminded separated by spaces \n
 
 read -p "Please provide the hour (24-hour time) then minute separated by spaces: " times
 
+read -p $'Please specify where you want the reminder shell scripts to be stored \n(by default stored in same directory as addrem script)\n: ' remindersDirectory 
+
+if [ -z "$remindersDirectory" ]
+  then
+    remindersDirectory=$(pwd)
+fi
+
+if [ "\$rem_Home" = "$remindersDirectory" ]
+  then
+    remindersDirectory=$rem_Home
+fi
+
 timesArray=($times)
 hour=${timesArray[0]}
 minute=${timesArray[1]}
 
 # Now that we have the necessary data, we can add it as a terminal-notifier script and then add it to crontab
 
-touch "${eventName}_reminder".sh
+test="$remindersDirectory"
+echo "test is: $test"
+fileName="${remindersDirectory}/${eventName}_reminder".sh
 
-chmod u+x "${eventName}_reminder".sh
+touch "${fileName}"
+
+chmod u+x "${fileName}"
 
 # Now add the terminal-notifier part to the newly created reminder script
-echo "'/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier' -title '$title' -message '$message' -open $zoomLink" > "${eventName}_reminder".sh
+echo "'/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier' -title '$title' -message '$message' -open $zoomLink" > "$fileName"
 
 # Now add the reminder script to the crontab with user-specified times
 
-currentDir=$(pwd)
-fileName=$currentDir/$eventName
 
 # crontab order
 #min hour * * day 
-(crontab -l 2>/dev/null; echo "$minute $hour * * $days ${fileName}_reminder.sh") | crontab -
+(crontab -l 2>/dev/null; echo "$minute $hour * * $days ${fileName}") | crontab -
 
