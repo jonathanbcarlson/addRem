@@ -16,17 +16,6 @@ addRem is a command-line tool to add reminders for online classes/events
 ## Dependencies:
 - [terminal-notifier](https://github.com/julienXX/terminal-notifier)
 - macOS
-## 
-## TODO:
-- [x] have user specify location of where reminders are stored
-  - [x] have default
-- [ ] have user say where terminal-notifier is stored
-  - [ ] have mine as default
-- [x] give ability for user to change message of notification
-- [x] check that Y works for confirming zoom
-- [ ] add ability to delete crontabs
-- [ ] add abiity for user to specify not just per week for crontab (e.g. a weekly scheduled meeting) but any day of the month (basically use all of crontab)
-
 ## Known issues
 - If you try to use environmental variables like $HOME when specifying the directory where reminders are stored, you first need to export the variable to use it in addRem. 
 - I've currently only added support for $HOME, which you can use by setting it to "remHome" and then exporting remHome
@@ -38,6 +27,15 @@ addRem is a command-line tool to add reminders for online classes/events
     ...
     Specify where you want to store reminders shell scripts:  $remHome
     ```
+## TODO:
+- [x] have user specify location of where reminders are stored
+  - [x] have default
+- [ ] have user say where terminal-notifier is stored
+  - [ ] have mine as default
+- [x] give ability for user to change message of notification
+- [x] check that Y works for confirming zoom
+- [ ] add ability to delete crontabs
+- [ ] add abiity for user to specify not just per week for crontab (e.g. a weekly scheduled meeting) but any day of the month (basically use all of crontab)
 
 
 
