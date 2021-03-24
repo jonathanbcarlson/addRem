@@ -9,9 +9,9 @@
   - Which days and at what time you want to be reminded at 
   - Where you want the reminder scripts to be stored
 ## Dependencies:
-- terminal-notifier
-- crontab
-- bash
+- [terminal-notifier](https://github.com/julienXX/terminal-notifier)
+- [cron](https://en.wikipedia.org/wiki/Cron)
+- [bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell))
 ## TODO:
 - [x] have user specify location of where reminders are stored
   - [x] have default
