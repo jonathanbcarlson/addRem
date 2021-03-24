@@ -9,11 +9,6 @@
 # -[x] check that Y works for confirming zoom
 # -[ ] add ability to delete crontabs
 
-# rem_Home is what $HOME should be set to when exported
-# e.g. type: 
-# rem_Home=$HOME
-# export rem_Home
-
 read -p "Enter event to be reminded of: " eventName
 read -p "Enter a title for the reminder: " title
 read -p "Enter a message for the reminder: " message
@@ -35,9 +30,9 @@ if [ -z "$remindersDirectory" ]
     remindersDirectory=$(pwd)
 fi
 
-if [ "\$rem_Home" = "$remindersDirectory" ]
+if [ "\$remHome" = "$remindersDirectory" ]
   then
-    remindersDirectory=$rem_Home
+    remindersDirectory=$remHome
 fi
 
 timesArray=($times)
