@@ -3,8 +3,15 @@
 ## Usage
 - Note that you do have to give your terminal application administrative control to use addRem since it uses crontab to remind you.
 - First run addRem: `./addRem`
-- Then answer questions about the name of the event, online class link (e.g. Zoom link), date and time, and where you want the reminder scripts to be stored.
-
+- Then answer questions about:
+  - The name of the event
+  - The online class link (e.g. Zoom link)
+  - Which days and at what time you want to be reminded at 
+  - Where you want the reminder scripts to be stored
+## Dependencies:
+- terminal-notifier
+- crontab
+- bash
 ## TODO:
 - [x] have user specify location of where reminders are stored
   - [x] have default
@@ -13,6 +20,7 @@
 - [x] give ability for user to change message of notification
 - [x] check that Y works for confirming zoom
 - [ ] add ability to delete crontabs
+- [ ] add abiity for user to specify not just per week for crontab (e.g. a weekly scheduled meeting) but any day of the month (basically use all of crontab)
 
 ## Known issues
 - If you try to use environmental variables like $HOME when specifying the directory where reminders are stored, you first need to export the variable to use it in addRem. 
@@ -25,9 +33,6 @@
     ...
     Specify where you want to store reminders shell scripts:  $remHome
     ```
-## Uses:
-- terminal-notifier
-- crontab
-- bash
+
 
 
