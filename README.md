@@ -1,5 +1,5 @@
 # addRem
-## Add reminders to go to an online class 
+addRem is a command-line tool to add reminders to go to an online class/event 
 ## Usage
 - Note that you do have to give your terminal application administrative control to use addRem since it uses crontab to remind you.
 - First run addRem: `./addRem`
