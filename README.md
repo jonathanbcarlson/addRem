@@ -1,17 +1,22 @@
 # addRem
-addRem is a command-line tool to add reminders to go to an online class/event 
+addRem is a command-line tool to add reminders for online classes/events
 ## Usage
 - Note that you do have to give your terminal application administrative control to use addRem since it uses crontab to remind you.
-- First run addRem: `./addRem`
+- First clone this repository:  
+  `git clone https://github.com/jonathanbcarlson/addRem`
+- Then cd to where the addRem script is: `cd addRem`
+- Now run addRem: `./addRem`
 - Then answer questions about:
   - The name of the event
   - The online class link (e.g. Zoom link)
   - Which days and at what time you want to be reminded at 
   - Where you want the reminder scripts to be stored
+- You will later see a terminal-notifier notification pop up at the date and time you specified. 
+- To join the online meeting, simply click the notification and it will take you to the online meeting link you typed in earlier.
 ## Dependencies:
 - [terminal-notifier](https://github.com/julienXX/terminal-notifier)
-- [cron](https://en.wikipedia.org/wiki/Cron)
-- [bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell))
+- macOS
+## 
 ## TODO:
 - [x] have user specify location of where reminders are stored
   - [x] have default
