@@ -10,7 +10,9 @@
 # -[ ] add ability to delete crontabs
 
 read -p "Enter event to be reminded of: " eventName
+read -p "Enter a title for the reminder: " title
 read -p "Enter a message for the reminder: " message
+title=${title[@]}
 message=${message[@]}
 read -p "Is this over Zoom? (Y/N): " confirm
 if echo "$confirm" | grep -iq "^y"; then
@@ -32,7 +34,7 @@ touch "${eventName}_reminder".sh
 chmod u+x "${eventName}_reminder".sh
 
 # Now add the terminal-notifier part to the newly created reminder script
-echo "'/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier' -title '$eventName' -message '$message' -open $zoomLink" > "${eventName}_reminder".sh
+echo "'/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier' -title '$title' -message '$message' -open $zoomLink" > "${eventName}_reminder".sh
 
 # Now add the reminder script to the crontab with user-specified times
 
