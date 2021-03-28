@@ -36,6 +36,7 @@ addRem is a command-line tool to add reminders for online classes/events
 - [x] check that Y works for confirming zoom
 - [ ] add ability to delete crontabs
 - [ ] add abiity for user to specify not just per week for crontab (e.g. a weekly scheduled meeting) but any day of the month (basically use all of crontab)
+- [ ] create reminders folder for reminders in specified directory location
 
 
 

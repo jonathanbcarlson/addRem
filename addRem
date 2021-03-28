@@ -1,14 +1,5 @@
 #!/bin/bash
 
-#TODO:
-# -[x] have user specify location of where reminders are stored
-#   -[x] have default
-# -[ ] have user say where terminal-notifier is stored
-#   -[ ] have mine as default
-# -[x] give ability for user to change message of notification
-# -[x] check that Y works for confirming zoom
-# -[ ] add ability to delete crontabs
-
 read -p "Enter event to be reminded of: " eventName
 read -p "Enter a title for the reminder: " title
 read -p "Enter a message for the reminder: " message
