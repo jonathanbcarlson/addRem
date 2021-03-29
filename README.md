@@ -8,7 +8,7 @@ addRem is a command-line tool to add reminders for online classes/events
     - after cloning the repo cd to where the addRem script is: `cd addRem`
     - Now run addRem: `./addRem`
   #### 2. from anywhere
-    - export the addRem script to your $PATH in your .bashrc or .zshrc or equivalent shell rc file using:
+    - export the addRem script to your `$PATH` in your .bashrc or .zshrc or equivalent shell rc file using:
       ```bash 
       export PATH="LOCATION_OF_addRem":$PATH"
       ```
@@ -25,9 +25,9 @@ addRem is a command-line tool to add reminders for online classes/events
 - [terminal-notifier](https://github.com/julienXX/terminal-notifier)
 - macOS
 ## Known issues
-- If you try to use environmental variables like $HOME when specifying the directory where reminders are stored, you first need to export the variable to use it in addRem. 
-- I've currently only added support for $HOME, which you can use by setting it to "remHome" and then exporting remHome
-  - For example you can add this to your .zshrc or .bashrc
+- If you try to use environmental variables like `$HOME` when specifying the directory where reminders are stored, you first need to export the variable to use it in addRem. 
+- I've currently only added support for `$HOME`, which you can use by setting it to `remHome` and then exporting remHome
+  - For example you can add this to your .bashrc or equivalent shell rc file
     ```bash 
     remHome=$HOME 
     export remHome
