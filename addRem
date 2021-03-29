@@ -12,18 +12,19 @@ fi
 
 read -p $'Please provide the days you want to be reminded separated by spaces \n(1=Mon, 2=Tue, 3=Wed, 4=Thur, 5=Fri, 6=Sat, 7=Sun)\n: ' days
 
-read -p "Please provide the hour (24-hour time) then minute separated by spaces: " times
+read -p "Please provide the hour (24-hour time) then minute separated by spaces (e.g. 23 04 or 23:04): " times
 
-read -p $'Please specify where you want the reminder shell scripts to be stored \n(by default stored in same directory as addrem script)\n: ' remindersDirectory 
+read -p $'Please specify where you want the reminder shell scripts to be stored \n(by default stored in same directory as addRem script)\n: ' remindersDirectory 
 
 if [ -z "$remindersDirectory" ]
   then
     remindersDirectory=$(pwd)
 fi
 
-if [ "\$remHome" = "$remindersDirectory" ]
+if [[ "$remindersDirectory" == *"\$remHome"* ]]
   then
-    remindersDirectory=$remHome
+    afterRemHome=$(echo "$remindersDirectory" | cut -f2- -d/)
+    remindersDirectory=${remHome}/$afterRemHome
 fi
 
 timesArray=($times)
@@ -32,9 +33,8 @@ minute=${timesArray[1]}
 
 # Now that we have the necessary data, we can add it as a terminal-notifier script and then add it to crontab
 
-test="$remindersDirectory"
-echo "test is: $test"
 fileName="${remindersDirectory}/${eventName}_reminder".sh
+# echo "fileName is: $fileName"
 
 touch "${fileName}"
 
@@ -49,4 +49,3 @@ echo "'/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier' -ti
 # crontab order
 #min hour * * day 
 (crontab -l 2>/dev/null; echo "$minute $hour * * $days ${fileName}") | crontab -
-
