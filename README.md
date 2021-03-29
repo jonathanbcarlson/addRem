@@ -36,6 +36,7 @@ addRem is a command-line tool to add reminders for online classes/events
 ## TODO:
 - [x] have user specify location of where reminders are stored
   - [x] have default
+- [x] put commas between separate days instead of separated by space (e.g. instead of 1 3 use 1,3)
 - [ ] have user say where terminal-notifier is stored
   - [ ] have mine as default
 - [x] give ability for user to change message of notification

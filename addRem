@@ -31,6 +31,9 @@ timesArray=($times)
 hour=${timesArray[0]}
 minute=${timesArray[1]}
 
+# make days comma-separated
+days=$(echo ${days// /,})
+
 # Now that we have the necessary data, we can add it as a terminal-notifier script and then add it to crontab
 
 fileName="${remindersDirectory}/${eventName}_reminder".sh
