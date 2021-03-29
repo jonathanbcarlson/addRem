@@ -8,7 +8,7 @@ addRem is a command-line tool to add reminders for online classes/events
     - after cloning the repo cd to where the addRem script is: `cd addRem`
     - Now run addRem: `./addRem`
   #### 2. from anywhere
-    - export the addRem script to your $PATH in your .bashrc or .zshrc using:
+    - export the addRem script to your $PATH in your .bashrc or .zshrc or equivalent shell rc file using:
       ```bash 
       export PATH="LOCATION_OF_addRem":$PATH"
       ```
