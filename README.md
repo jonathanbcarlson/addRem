@@ -48,6 +48,7 @@ addRem is a command-line tool to add reminders for online classes/events
 - [ ] add a simple y/n if you want to have the title as the same name as the event name - similar to zoom link confirmation
 - [ ] add a default path for reminders folder by adding it in .zshrc, with confirmation of if you want default - similar to zoom link confirmation
 - [ ] add ability to see all reminders and their times
+- [ ] fails if just uses $remHome for where reminder is stored
 
 
 

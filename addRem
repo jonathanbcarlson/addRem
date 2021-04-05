@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 read -p "Enter event to be reminded of: " eventName
 read -p "Enter a title for the reminder: " title
 read -p "Enter a message for the reminder: " message
@@ -23,6 +24,7 @@ fi
 
 if [[ "$remindersDirectory" == *"\$remHome"* ]]
   then
+    echo "using remHome"
     afterRemHome=$(echo "$remindersDirectory" | cut -f2- -d/)
     remindersDirectory=${remHome}/$afterRemHome
 fi
@@ -50,4 +52,4 @@ echo "'/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier' -ti
 
 # crontab order
 #min hour * * day 
-(crontab -l 2>/dev/null; echo "$minute $hour * * $days ${fileName}") | crontab -
+(crontab -l 2>/dev/null; echo "$minute $hour * * $days \"${fileName}\"") | crontab -
