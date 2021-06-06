@@ -1,0 +1,1 @@
+'/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier' -title 'lecture - test' -message 'hello' -open 'https://ucla.zoom.us/j/98811081960?pwd=T1M5UWJTRTd2K3Ntd3Z5bUxrVExjZz09'

@@ -39,10 +39,13 @@ addRem is a command-line tool to add reminders for online classes/events
 - [x] put commas between separate days instead of separated by space (e.g. instead of 1 3 use 1,3)
 - [ ] have user say where terminal-notifier is stored
   - [ ] have mine as default
+     - have this only happen first time addRem is executed, or just make it an environmental variable like remHome? 
 - [x] give ability for user to change message of notification
 - [x] check that Y works for confirming zoom
 - [ ] add ability to delete crontabs
 - [ ] add abiity for user to specify not just per week for crontab (e.g. a weekly scheduled meeting) but any day of the month (basically use all of crontab)
+- [ ] maybe instead of having environement variables, have the user put it in a config file e.g. ~/.config/addRem.toml
+     - then have to parse :( 
 - [x] create reminders folder for reminders in specified directory location
 - [x] add part of exporting addRem to path in .zshrc or .bashrc
 - [ ] add a simple y/n if you want to have the title as the same name as the event name - similar to zoom link confirmation

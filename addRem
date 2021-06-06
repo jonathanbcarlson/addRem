@@ -17,6 +17,7 @@ read -p "Please provide the hour (24-hour time) then minute separated by spaces 
 
 read -p $'Please specify where you want the reminder shell scripts to be stored \n(by default stored in same directory as addRem script, remember to use $remHome to reference $HOME)\n: ' remindersDirectory 
 
+# by default remindersDirectory is pwd (pwd is where the addRem script gets executed, not where it's stored)
 if [ -z "$remindersDirectory" ]
   then
     remindersDirectory=$(pwd)
