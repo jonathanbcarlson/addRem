@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/exec"
 	"strings"
 	"time"
 
@@ -93,7 +94,9 @@ func main() {
 		log.Fatalf("Unable to retrieve Calendar client: %v", err)
 	}
 
-	t := time.Now().Format(time.RFC3339)
+	tMin := time.Now().Format(time.RFC3339)
+	// tMax is 3 months ahead of when the script is run
+	tMax := time.Now().AddDate(0, 3, 0).Format(time.RFC3339)
 
 	/* list, err := srv.CalendarList.List().Do()
 	if err != nil {
@@ -111,7 +114,7 @@ func main() {
 
 	// FIX: maxResults to be a non-arbitrary/reasonable value
 	events, err := srv.Events.List("primary").
-		SingleEvents(true).TimeMin(t).OrderBy("startTime").MaxResults(5).Do()
+		SingleEvents(true).TimeMin(tMin).TimeMax(tMax).OrderBy("startTime").ShowDeleted(false).Do()
 	if err != nil {
 		log.Fatalf("Unable to retrieve next ten of the user's events: %v", err)
 	}
@@ -124,38 +127,63 @@ func main() {
 			if date == "" {
 				date = item.Start.Date
 			}
-			if strings.Contains(item.Location, "zoom") {
-				// fmt.Printf("%v (%v), location: %v\n", item.Summary, date, item.Location)
+			fmt.Printf("desc: %v, sum: %v, id: %v, conferenceData: %v\n",
+				item.Description, item.Summary, item.Id, item.ConferenceData)
 
-				fmt.Printf("desc: %v, sum: %v, id: %v", item.Description, item.Summary, item.Id)
+			meetingURL := ""
+			// want to use entry.Uri as the meeting link
+			confData := item.ConferenceData
+			if item.ConferenceData != nil {
+				meetingURL = confData.EntryPoints[0].Uri
+			}
+
+			// FIXME: what if both location and conferenceData are used? which do I prioritize
+
+			// it's valid if it uses Zoom, Google Meet, Team, or Skype TODO: determine if there's other possible platforms
+			validMeetingLink := strings.Contains(item.Location, "zoom") || strings.Contains(item.Location, "meet") ||
+				strings.Contains(item.Location, "teams") || strings.Contains(item.Location, "skype") || meetingURL != ""
+
+			if validMeetingLink {
+
 				f := item.Summary
 				// eventually want this to write Reminder scripts in a user specified directory
 				// create a crontab to have this run, say every 12 hours. (can change later)
 
-				// item.Summary is title/name of event
-				// item.Location is location of event
-				// item.Start.DateTime is start of of event
-
-				// TODO: determine location of terminal-notifier on the users system
-				terminalNotifierLocation := "'/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier'"
-				quotedItemSummary := fmt.Sprintf("'%s'", item.Summary)
-				if err != nil {
-					log.Fatalf("cannot convert item.Location to quotedItem")
+				// if it's not using conferenceData set meetingURL to the location
+				if meetingURL == "" {
+					meetingURL = item.Location
 				}
-				titleOfRem := " -title " + quotedItemSummary
-				// TODO: get remMessage from user or set as environmental variable so they don't have to keep interacting with
-				// this script over and over again
-				remMessage := " -message 'hello'"
-				quotedItemLocation := fmt.Sprintf("'%s'", item.Location)
-				meetingLink := " -open " + quotedItemLocation
+
+				// use node-notifier-cli (https://github.com/mikaelbr/node-notifier-cli)
+				// first make sure npm is installed (`which npm` then `echo $?`, if 0 then good)
+				// check that npx is installed (`which npx` -- same thing as npm)
+				// then check that node-notifier is installed
+
+				cmd, err := exec.Command("/bin/bash", "./test.sh").Output()
+				if err != nil {
+					fmt.Printf("error on exec: %v", err)
+				}
+				fmt.Printf("cmd is: %v\n", string(cmd))
+
+				// use this format to run:  npx -p node-notifier-cli notify -t 'Hello' -m 'My message' -o "https://google.com"
+
+				// FIXME: issue with -h being considered `notify -h` instead of meet.google.com/ker-hdfd-dfdfd
+				nodeNotifier := "npx -p node-notifier-cli notify"
+				titleOfRem := fmt.Sprintf(" --title '%s'", item.Summary)
+				remMessage := fmt.Sprintf(" --message 'Go to %v'", item.Summary)
+				/* need to escape (add \) any shorthand characters that
+				 * node-notifier-cli uses: -h, -t, -st, -m, -i, -s, -o, -p, -x, -c, -a
+				 */
+				meetingLink := fmt.Sprintf(" --open '%s'", meetingURL)
 
 				// "'/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier' -title 'CS 111 Lec' -message 'operate' -open https://ucla.zoom.us/j/98811081960?pwd=T1M5UWJTRTd2K3Ntd3Z5bUxrVExjZz09"
 				var sb strings.Builder
-				sb.WriteString(terminalNotifierLocation)
+				sb.WriteString(nodeNotifier)
 				sb.WriteString(titleOfRem)
 				sb.WriteString(remMessage)
 				sb.WriteString(meetingLink)
 
+				// make this event-driven? or need to remove old reminder scripts
 				if f != "" {
 					err := ioutil.WriteFile(f, []byte(sb.String()), 0744)
 					if err != nil {
